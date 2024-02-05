@@ -1,9 +1,7 @@
+"use client";
+
 import MiniHeader from "@/components/MiniHeader";
-import React from "react";
-import Sunny from "../../../public/png/sunny.png";
-import Rain from "../../../public/png/raining.png";
-import Cloud from "../../../public/png/cloudy.png";
-import Thunder from "../../../public/png/thunder.png";
+import React, {useContext, useState} from "react";
 import DayCard from "@/components/DayCard";
 import UVIndex from "@/components/WeatherReport/UVIndex";
 import WindSpeed from "@/components/WeatherReport/WindSpeed";
@@ -11,35 +9,75 @@ import Rise from "@/components/WeatherReport/Rise";
 import Humidity from "@/components/WeatherReport/Humidity";
 import Visibility from "@/components/WeatherReport/Visibility";
 import AirQuality from "@/components/WeatherReport/AirQuality";
+import {WeatherContextType, WeatherDatas} from "@/context/WeatherContext";
+import CurrentForcast from "@/components/CurrentForcast";
 
 const Section2 = () => {
-	const days = [
-		{day: "Sun", icon: Sunny, temp: 13},
-		{day: "Mon", icon: Rain, temp: 20},
-		{day: "Tue", icon: Cloud, temp: 33},
-		{day: "Wed", icon: Thunder, temp: 15},
-		{day: "Thu", icon: Sunny, temp: 23},
-		{day: "Fri", icon: Cloud, temp: 9},
-		{day: "Sat", icon: Thunder, temp: 13},
+	const {data} = useContext(WeatherDatas) as WeatherContextType;
+
+	const [today, setToday] = useState(false);
+
+	const len = data.list.length;
+
+	const uniqueDate = [
+		...new Set(
+			data.list.map(
+				(entry) => new Date(entry.dt * 1000).toISOString().split("T")[0]
+			)
+		),
 	];
+
+	const firstDataForEach = uniqueDate.map((date) => {
+		return data.list.find((entry) => {
+			const everyDate = new Date(entry.dt * 1000).toISOString().split("T")[0];
+			const entryTime = new Date(entry.dt * 1000).getHours();
+			return everyDate === date && entryTime >= 6;
+		});
+	});
+
+	const currentDate = new Date();
+	currentDate.setHours(0, 0, 0, 0);
+
+	const currentDayForecast = data.list.filter((item) => {
+		const forecastDate = new Date(item.dt * 1000);
+		forecastDate.setHours(0, 0, 0, 0);
+		return forecastDate.getTime() === currentDate.getTime();
+	});
+
 	return (
 		<>
-			<div className="w-auto h-full flex flex-col items-center pt-2 pl-4">
-				<MiniHeader />
-				<div className="w-full h-auto flex items-center justify-evenly">
-					{days.map((item) => (
-						<DayCard data={item} />
-					))}
+			<div className="w-auto h-full flex flex-col items-center px-6 sm:p-0">
+				<div className="w-full h-auto pb-2 sm:mt-5">
+					<MiniHeader today={today} setToday={setToday} />
+				</div>
+				<div className="w-full h-auto flex items-center space-x-5 overflow-auto sm:overflow-auto lg:overflow-auto xl:overflow-auto xl:justify-normal lg:justify-normal sm:justify-normal">
+					{today
+						? firstDataForEach?.map((item, id) => (
+								<DayCard data={item} key={id} />
+						  ))
+						: currentDayForecast.map((item, id) => {
+								return <CurrentForcast data={item} key={id} />;
+						  })}
 				</div>
 				<div className="w-full h-auto mt-5">
-					<h1 className="text-2xl">Todays Report</h1>
-					<div className="w-auto h-full flex flex-wrap">
+					<h1 className="text-2xl mb-5">Todays Report</h1>
+					<div className="w-full h-1/2 flex justify-between px-2 sm:hidden md:overflow-auto">
 						<UVIndex />
-						<WindSpeed />
-						<Rise />
-						<Humidity />
-						<Visibility />
-						<AirQuality />
+						<WindSpeed speed={data.list[len - 1].wind.speed} />
+						<Rise time={data.city} />
+					</div>
+					<div className="w-full h-1/2 flex mt-5 justify-between px-2 sm:hidden md:overflow-auto">
+						<Humidity humidity={data.list[len - 1].main.humidity} />
+						<Visibility vision={data.list[len - 1].visibility} />
+						<AirQuality pressure={data.list[len - 1].main.pressure} />
+					</div>
+					<div className="hidden sm:flex sm:flex-col gap-5 ">
+						<UVIndex />
+						<WindSpeed speed={data.list[len - 1].wind.speed} />
+						<Rise time={data.city} />
+						<Humidity humidity={data.list[len - 1].main.humidity} />
+						<Visibility vision={data.list[len - 1].visibility} />
+						<AirQuality pressure={data.list[len - 1].main.pressure} />
 					</div>
 				</div>
 			</div>

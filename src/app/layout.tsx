@@ -3,6 +3,7 @@ import {Inter} from "next/font/google";
 import "./globals.css";
 import {ThemeProvider} from "@/context/ThemeContext";
 import ThemeWrapper from "@/context/ThemeWrapper";
+import {WeatherContext} from "@/context/WeatherContext";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -23,13 +24,15 @@ export default function RootLayout({
 			<body className={inter.className}>
 				<ThemeProvider>
 					<ThemeWrapper>
-						<div
-							className={`bg-slate-800 w-full h-screen flex items-center justify-center`}>
-							<div className="w-[70%] h-[80%] p-5 rounded-[30px] glass flex items-center">
-								<div className="w-[30%] h-full">{section1}</div>
-								<div className="w-[70%] h-full">{section2}</div>
+						<WeatherContext>
+							<div
+								className={`bg-slate-800 w-full h-screen sm:h-auto flex items-center justify-center`}>
+								<div className="w-[70%] h-[85%] sm:w-[90%] sm:h-auto lg:w-[90%] xl:w-[90%] xls:w-[90%] sc:w-[90%] sm:mt-5 sm:mb-5 p-5 rounded-[30px] glass flex sm:flex-col items-center">
+									<div className="w-[30%] sm:w-full h-full">{section1}</div>
+									<div className="w-[70%] sm:w-full h-full">{section2}</div>
+								</div>
 							</div>
-						</div>
+						</WeatherContext>
 					</ThemeWrapper>
 				</ThemeProvider>
 			</body>
