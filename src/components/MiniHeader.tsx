@@ -30,7 +30,6 @@ const MiniHeader = ({
 						<button className="btn btn-circle btn-warning text-white">
 							&deg;C
 						</button>
-						<button className="btn btn-circle">&deg;F</button>
 					</div>
 					{/* <div className="flex items-center">
 						<label className="swap swap-rotate">

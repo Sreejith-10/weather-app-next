@@ -68,6 +68,7 @@ export const WeatherContext = ({children}: any) => {
 			.then((res) => setData(res.data))
 			.catch((err) => console.log(err));
 	}, [searchKey]);
+	
 
 	return (
 		<WeatherDatas.Provider value={{data, setData, searchKey, setSearchKey}}>
