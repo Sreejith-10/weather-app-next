@@ -11,6 +11,7 @@ import {convertTemperatureInKelvin} from "@/utils/convertTemperature";
 import {getCurrentDay} from "@/utils/getCurrentDay";
 import axios from "axios";
 import Suggestions from "@/components/Suggestions";
+import WeatherIcon from "@/components/WeatherIcon";
 
 const api = process.env.API_KEY;
 
@@ -51,10 +52,18 @@ const Section1 = () => {
 	const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Enter") {
 			setSearchKey(city);
-			setSuggestions([])
+			setSuggestions([]);
 		}
 	};
-
+	const time = Math.floor(Date.now() / 1000);
+	const closestForecast = data.list.reduce((closest, forecast) => {
+		const forecarTime = forecast.dt;
+		const timeD = Math.abs(time - forecarTime);
+		if (timeD < Math.abs(time - closest.dt)) {
+			return forecast;
+		}
+		return closest;
+	});
 	return (
 		<>
 			<div className="w-auto h-full flex flex-col justify-between sm:justify-evenly">
@@ -68,19 +77,14 @@ const Section1 = () => {
 				</div>
 				<div className="card flex items-center">
 					<div className="card-body">
-						<Image
-							src={Sunny}
-							alt="not found"
-							width={150}
-							height={150}
-							priority
-						/>
+						{closestForecast && (
+							<WeatherIcon icon={closestForecast?.weather[0]?.main} key={1} />
+						)}
 					</div>
-					S
 				</div>
 				<div className="w-full h-auto flex flex-col items-center justify-center">
 					<h1 className="text-[4rem]">
-						{convertTemperatureInKelvin(data?.list[ListLength - 1]?.main?.temp)}
+						{convertTemperatureInKelvin(closestForecast.main.temp)}
 						&deg; C
 					</h1>
 					<h4 className="font-bold">{getCurrentDay()}</h4>
@@ -88,26 +92,12 @@ const Section1 = () => {
 				<div className="card bg-[rgba(255,255,255,.2)] shadow-xl flex items-center sm:mt-5 sm:mb-5">
 					<div className="card-body">
 						<div className="w-full h-auto flex items-center gap-5">
-							<Image
-								src={Sunny}
-								alt="not found"
-								width={50}
-								height={50}
-								priority
-							/>
+							{closestForecast && (
+								<WeatherIcon icon={closestForecast?.weather[0]?.main} key={1} />
+							)}
 							<p className="w-auto font-bold">
-								{data?.list[ListLength - 1]?.weather[0]?.main}
+								{closestForecast.weather[0].description}
 							</p>
-						</div>
-						<div className="w-full h-auto flex items-center gap-5">
-							<Image
-								src={Rain}
-								alt="not found"
-								width={50}
-								height={50}
-								priority
-							/>
-							<p className="w-auto font-bold">Rain - 30%</p>
 						</div>
 					</div>
 				</div>

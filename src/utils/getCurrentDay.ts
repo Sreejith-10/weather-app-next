@@ -39,7 +39,6 @@ export const singleDate = (t: number) => {
 	const d = new Date(t * 1000);
 	const dw = d.getDay();
     const dname = days[dw]
-
     return dname
 };
 
