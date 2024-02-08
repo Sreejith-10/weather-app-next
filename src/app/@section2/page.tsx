@@ -62,17 +62,18 @@ const Section2 = () => {
 				<div className="w-full h-auto mt-5">
 					<h1 className="text-2xl mb-5">Todays Report</h1>
 					<div className="w-full h-1/2 flex justify-between px-2 sm:hidden md:overflow-auto">
-						<UVIndex />
 						<WindSpeed speed={data.list[len - 1].wind.speed} />
 						<Rise time={data.city} />
+						<Humidity humidity={data.list[len - 1].main.humidity} />
 					</div>
 					<div className="w-full h-1/2 flex mt-5 justify-between px-2 sm:hidden md:overflow-auto">
-						<Humidity humidity={data.list[len - 1].main.humidity} />
-						<Visibility vision={data.list[len - 1].visibility} />
 						<AirQuality pressure={data.list[len - 1].main.pressure} />
+						<Visibility vision={data.list[len - 1].visibility} />
+						<div className="invisible">
+							<Visibility vision={data.list[len - 1].visibility} />
+						</div>
 					</div>
 					<div className="hidden sm:flex sm:flex-col gap-5 ">
-						<UVIndex />
 						<WindSpeed speed={data.list[len - 1].wind.speed} />
 						<Rise time={data.city} />
 						<Humidity humidity={data.list[len - 1].main.humidity} />

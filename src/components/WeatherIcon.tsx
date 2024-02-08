@@ -20,13 +20,17 @@ const WeatherIcon = ({icon}: {icon: string}) => {
 		if (item.main === icon) return item;
 	});
 	return (
-		<Image
-			src={inludedIcon[0]?.icon}
-			alt="not found"
-			width={50}
-			height={50}
-			priority
-		/>
+		<>
+			{icon && (
+				<Image
+					src={inludedIcon[0]?.icon}
+					alt="not found"
+					width={50}
+					height={50}
+					priority
+				/>
+			)}
+		</>
 	);
 };
 

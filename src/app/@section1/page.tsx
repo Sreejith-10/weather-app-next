@@ -50,7 +50,7 @@ const Section1 = () => {
 	};
 
 	const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === "Enter") {
+		if (e.keyCode === 13) {
 			setSearchKey(city);
 			setSuggestions([]);
 		}

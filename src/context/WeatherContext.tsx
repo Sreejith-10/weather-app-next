@@ -60,7 +60,6 @@ export const WeatherContext = ({children}: any) => {
 		message: 0,
 	});
 	const [searchKey, setSearchKey] = useState<string>("aluva");
-
 	useEffect(() => {
 		axios
 			.get(
@@ -69,7 +68,6 @@ export const WeatherContext = ({children}: any) => {
 			.then((res) => setData(res.data))
 			.catch((err) => console.log(err));
 	}, [searchKey]);
-
 
 	return (
 		<WeatherDatas.Provider value={{data, setData, searchKey, setSearchKey}}>
