@@ -50,7 +50,7 @@ const Section2 = () => {
 				<div className="w-full h-auto pb-2 sm:mt-5">
 					<MiniHeader today={today} setToday={setToday} />
 				</div>
-				<div className="w-full h-auto flex items-center space-x-5 overflow-auto sm:overflow-auto lg:overflow-auto xl:overflow-auto xl:justify-normal lg:justify-normal sm:justify-normal">
+				<div className="w-full h-auto flex items-center space-x-5 overflow-auto sm:w-full sm:overflow-scroll lg:overflow-auto xl:overflow-auto xl:justify-normal lg:justify-normal sm:justify-normal">
 					{today
 						? firstDataForEach?.map((item, id) => (
 								<DayCard data={item} key={id} />
