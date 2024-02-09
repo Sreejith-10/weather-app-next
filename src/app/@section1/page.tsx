@@ -35,7 +35,7 @@ const Section1 = () => {
 		try {
 			axios
 				.get(
-					`http://api.openweathermap.org/data/2.5/find?q=${city}&appid=13f30c9d60e23953aaca432b31cfa69f`
+					`https://api.openweathermap.org/data/2.5/find?q=${city}&appid=13f30c9d60e23953aaca432b31cfa69f`
 				)
 				.then((res: any) => {
 					const sug = res.data.list.map((item: any) => {

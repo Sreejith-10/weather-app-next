@@ -63,11 +63,12 @@ export const WeatherContext = ({children}: any) => {
 	useEffect(() => {
 		axios
 			.get(
-				`http://api.openweathermap.org/data/2.5/forecast?q=${searchKey}&appid=13f30c9d60e23953aaca432b31cfa69f&cnt=56`
+				`https://api.openweathermap.org/data/2.5/forecast?q=${searchKey}&appid=13f30c9d60e23953aaca432b31cfa69f&cnt=56`
 			)
 			.then((res) => setData(res.data))
 			.catch((err) => console.log(err));
 	}, [searchKey]);
+
 
 	return (
 		<WeatherDatas.Provider value={{data, setData, searchKey, setSearchKey}}>

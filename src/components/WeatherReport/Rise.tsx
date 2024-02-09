@@ -3,9 +3,10 @@ import Up from "../../../public/png/sunrise.png";
 import Set from "../../../public/png/sunsets.png";
 import Image from "next/image";
 import {CityType} from "@/utils/types";
-import { convertTime } from "@/utils/getCurrentDay";
+import {convertTime} from "@/utils/getCurrentDay";
 
 const Rise = ({time}: {time: CityType}) => {
+	console.log(time);
 	return (
 		<div className=" bg-[rgba(255,255,255,.4)] w-[250px] h-auto sm:w-full sm:h-[200px] xls:w-[200px] lg:w-[180px] max-h-[200px] rounded-[1rem] flex flex-col items-center justify-center">
 			<div className="w-full h-10">
