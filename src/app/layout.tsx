@@ -27,7 +27,7 @@ export default function RootLayout({
 						<WeatherContext>
 							<div
 								className={`bg-slate-800 w-full h-screen sm:h-auto flex items-center justify-center`}>
-								<div className="w-[70%] h-[85%] sm:w-[90%] sm:h-auto lg:w-[90%] xl:w-[90%] xls:w-[90%] sc:w-[90%] sm:mt-5 sm:mb-5 p-5 rounded-[30px] glass flex sm:flex-col items-center">
+								<div className="w-[70%] h-[85%] sm:w-[90%] sm:h-auto lg:w-[90%] xl:w-[90%] xls:w-[90%] sc:w-[90%] sm:mt-5 sm:mb-5 p-5 rounded-[30px] glass backdrop-filter-none flex sm:flex-col items-center">
 									<div className="w-[30%] sm:w-full h-full">{section1}</div>
 									<div className="w-[70%] sm:w-full h-full">{section2}</div>
 								</div>

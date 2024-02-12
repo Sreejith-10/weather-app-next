@@ -1,4 +1,6 @@
+import Image from "next/image";
 import React from "react";
+import WindSock from "../../../public/png/windsock.png";
 
 const WindSpeed = ({speed}: {speed: number}) => {
 	return (
@@ -7,7 +9,8 @@ const WindSpeed = ({speed}: {speed: number}) => {
 				<div className="w-full h-10">
 					<h1 className="font-semibold">Wind Speed</h1>
 				</div>
-				<div className="w-full h-full flex items-center justify-center">
+				<div className="w-full h-full flex items-center justify-evenly">
+					<Image alt="not found" src={WindSock} width={50} height={50} />
 					<h3 className="font-bold text-3xl">{speed} Km/h</h3>
 				</div>
 			</div>

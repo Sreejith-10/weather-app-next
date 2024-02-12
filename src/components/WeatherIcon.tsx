@@ -7,7 +7,15 @@ import Thunder from "../../public/png/thunder.png";
 import Drizzele from "../../public/png/drizzle.png";
 import Snows from "../../public/png/overcast.png";
 
-const WeatherIcon = ({icon}: {icon: string}) => {
+const WeatherIcon = ({
+	icon,
+	width,
+	height,
+}: {
+	icon: string;
+	width?: number;
+	height?: number;
+}) => {
 	const icons: {main: string; icon: StaticImageData}[] = [
 		{main: "Clear", icon: Sunny},
 		{main: "Rain", icon: Rain},
@@ -25,8 +33,8 @@ const WeatherIcon = ({icon}: {icon: string}) => {
 				<Image
 					src={inludedIcon[0]?.icon}
 					alt="not found"
-					width={50}
-					height={50}
+					width={width ? width : 50}
+					height={height ? height : 50}
 					priority
 				/>
 			)}

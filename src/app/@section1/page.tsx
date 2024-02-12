@@ -1,14 +1,9 @@
 "use client";
 
 import SearchBox from "@/components/SearchBox";
-import Image from "next/image";
 import React, {useContext, useState} from "react";
-import Sunny from "../../../public/png/sunny.png";
-import Rain from "../../../public/png/raining.png";
 import {WeatherContextType, WeatherDatas} from "@/context/WeatherContext";
-import {WeatherDataType} from "@/utils/types";
 import {convertTemperatureInKelvin} from "@/utils/convertTemperature";
-import {getCurrentDay} from "@/utils/getCurrentDay";
 import axios from "axios";
 import Suggestions from "@/components/Suggestions";
 import WeatherIcon from "@/components/WeatherIcon";
@@ -16,13 +11,15 @@ import WeatherIcon from "@/components/WeatherIcon";
 const api = process.env.API_KEY;
 
 const Section1 = () => {
-	const {data, setSearchKey} = useContext(WeatherDatas) as WeatherContextType;
-	const [city, setCity] = useState("");
+	const {data, setSearchKey, setErr} = useContext(
+		WeatherDatas
+	) as WeatherContextType;
+	const [city, setCity] = useState<string>("");
 	const [suggesctions, setSuggestions] = useState<string[]>([]);
 	const [showSuggesctions, setShowSuggestions] = useState<boolean>(false);
-	const ListLength = data.list.length;
 
 	const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setErr(false);
 		let text = e.target.value;
 		text = text.trim();
 		setCity(text);
@@ -73,12 +70,21 @@ const Section1 = () => {
 						inputHandler={inputHandler}
 						onKeyDownHandler={onKeyDownHandler}
 					/>
-					<Suggestions places={suggesctions} setSuggestions={setSuggestions} />
+					<Suggestions
+						setCity={setCity}
+						places={suggesctions}
+						setSuggestions={setSuggestions}
+					/>
 				</div>
 				<div className="card flex items-center">
 					<div className="card-body">
 						{closestForecast && (
-							<WeatherIcon icon={closestForecast?.weather[0]?.main} key={1} />
+							<WeatherIcon
+								icon={closestForecast?.weather[0]?.main}
+								key={1}
+								width={200}
+								height={200}
+							/>
 						)}
 					</div>
 				</div>
@@ -87,7 +93,6 @@ const Section1 = () => {
 						{convertTemperatureInKelvin(closestForecast.main.temp)}
 						&deg; C
 					</h1>
-					<h4 className="font-bold">{getCurrentDay()}</h4>
 				</div>
 				<div className="card bg-[rgba(255,255,255,.2)] shadow-xl flex items-center sm:mt-5 sm:mb-5">
 					<div className="card-body">
